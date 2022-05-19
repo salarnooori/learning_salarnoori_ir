@@ -20,8 +20,11 @@ namespace DAL.Admin
             try
             {
                 OpenConn();
+
+                // //fake error
                 //int b = 0;
                 //float a = 10 / b;
+                
                 SetQuery("INSERT INTO Categories(name,quantity,details,maincategory_id) VALUES (\'" + name + "\',\'" + quantity.ToString() + "\',\'" + details + "\',\'" + maincategory_id + "\');");
                 return CloseConn();
             }
