@@ -15,27 +15,82 @@ namespace BLL.Admin
 
         public bool AddUser(string username, string password, string email, string name, string family, string image, string bio)
         {
-            return userRepository.AddUser(username, password, email, name, family, image, bio);
+            try
+            {
+                return userRepository.AddUser(username, password, email, name, family, image, bio);
+            }
+            catch (DalException err)
+            {
+                string message = err.GetMessage();
+                string route = err.GetRoute();
+                route += "BLL : AddUser() in UserController.cs -> ";
+                BllException bllException = new BllException(message, route);
+                throw bllException;
+            }
         }
 
         public List<User> GetAll()
         {
-            return userRepository.GetAll();
+            try
+            {
+                return userRepository.GetAll();
+            }
+            catch (DalException err)
+            {
+                string message = err.GetMessage();
+                string route = err.GetRoute();
+                route += "BLL : GetAll() in UserController.cs -> ";
+                BllException bllException = new BllException(message, route);
+                throw bllException;
+            }
         }
 
         public User GetUser(int id)
         {
-            return userRepository.GetUser(id);
+            try
+            {
+                return userRepository.GetUser(id);
+            }
+            catch (DalException err)
+            {
+                string message = err.GetMessage();
+                string route = err.GetRoute();
+                route += "BLL : GetUser() in UserController.cs -> ";
+                BllException bllException = new BllException(message, route);
+                throw bllException;
+            }
         }
 
         public bool EditUser(int id, string password, string name, string family, string image, string bio)
         {
-            return userRepository.EditUser(id, password, name, family, image, bio);
+            try
+            {
+                return userRepository.EditUser(id, password, name, family, image, bio);
+            }
+            catch (DalException err)
+            {
+                string message = err.GetMessage();
+                string route = err.GetRoute();
+                route += "BLL : EditUser() in UserController.cs -> ";
+                BllException bllException = new BllException(message, route);
+                throw bllException;
+            }
         }
 
         public bool DeleteUser(int id)
         {
-            return userRepository.DeleteUser(id);
+            try
+            {
+                return userRepository.DeleteUser(id);
+            }
+            catch (DalException err)
+            {
+                string message = err.GetMessage();
+                string route = err.GetRoute();
+                route += "BLL : DeleteUser() in UserController.cs -> ";
+                BllException bllException = new BllException(message, route);
+                throw bllException;
+            }
         }
 
     }

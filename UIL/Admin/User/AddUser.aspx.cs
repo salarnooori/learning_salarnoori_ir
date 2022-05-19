@@ -18,27 +18,61 @@ namespace UIL.Admin.User
 
         protected void add_user_btn_Click(object sender, EventArgs e)
         {
-            UserController UserController = new UserController();
+            try
+            {
+                UserController UserController = new UserController();
 
-            bool result;
+                bool result;
 
-            if (FileUpLoad1.HasFile)
-            {
-                FileUpLoad1.SaveAs(Server.MapPath("~\\assets\\uploads\\profiles\\") + FileUpLoad1.FileName);
-                result = UserController.AddUser(username_txt.Text.ToString(), password_txt.Text.ToString(), email_txt.Text.ToString(), name_txt.Text.ToString(), family_txt.Text.ToString(), FileUpLoad1.FileName, bio_txt.Text.ToString());
-            }
-            else
-            {
-                result = UserController.AddUser(username_txt.Text.ToString(), password_txt.Text.ToString(), email_txt.Text.ToString(), name_txt.Text.ToString(), family_txt.Text.ToString(), "defult.png", bio_txt.Text.ToString());
-            }
+                if (FileUpLoad1.HasFile)
+                {
+                    FileUpLoad1.SaveAs(Server.MapPath("~\\assets\\uploads\\profiles\\") + FileUpLoad1.FileName);
+                    result = UserController.AddUser(username_txt.Text.ToString(), password_txt.Text.ToString(), email_txt.Text.ToString(), name_txt.Text.ToString(), family_txt.Text.ToString(), FileUpLoad1.FileName, bio_txt.Text.ToString());
+                }
+                else
+                {
+                    result = UserController.AddUser(username_txt.Text.ToString(), password_txt.Text.ToString(), email_txt.Text.ToString(), name_txt.Text.ToString(), family_txt.Text.ToString(), "defult.png", bio_txt.Text.ToString());
+                }
 
-            if (result)
-            {
-                Response.Redirect("ShowUser.aspx");
+                if (result)
+                {
+                    Response.Redirect("ShowUser.aspx");
+                }
+                else
+                {
+                    Response.Write("<script>alert('خطا در ثبت اطلاعات در پایگاه داده.')</script>");
+                }
             }
-            else
+            catch (BllException err)
             {
-                Response.Write("<script>alert('خطا در ثبت اطلاعات در پایگاه داده.')</script>");
+                ErrorController errorController = new ErrorController();
+                string message = err.GetMessage();
+                string route = err.GetRoute();
+                route += "UIL : add_user_btn_Click() in AddUser.aspx.cs";
+                string ip = Request.ServerVariables["HTTP_X_FORWARDED_FOR"];
+
+                if (string.IsNullOrEmpty(ip))
+                {
+                    ip = Request.ServerVariables["REMOTE_ADDR"];
+                }
+                string values = "Username = " + username_txt.Text.ToString() +
+                    " & Password = " + password_txt.Text.ToString() +
+                    " & Email = " + email_txt.Text +
+                    " & Name = " + name_txt.Text +
+                    " & Family = " + family_txt.Text +
+                    " & FileName = " + FileUpLoad1.FileName +
+                    " & Bio = " + bio_txt.Text.ToString();
+                if (errorController.AddError(message, route, ip, values))
+                {
+                    //write in Errors Table
+                }
+                else
+                {
+                    //cant write in Database
+                }
+
+                Response.Write("<script>alert('خطا در ثبت اطلاعات .')</script>");
+
             }
 
         }

@@ -41,6 +41,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Admin\DalException.cs" />
+    <Compile Include="Admin\ErrorRepository.cs" />
     <Compile Include="Admin\UserRepository.cs" />
     <Compile Include="Admin\CategoryRepository.cs" />
     <Compile Include="Admin\PostRepository.cs" />

@@ -41,7 +41,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Admin\BllException.cs" />
     <Compile Include="Admin\CategoryController.cs" />
+    <Compile Include="Admin\ErrorController.cs" />
     <Compile Include="Admin\UserController.cs" />
     <Compile Include="Admin\PostController.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
